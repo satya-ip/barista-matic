@@ -31,7 +31,7 @@ public class CoffeeMachineMenuImpl implements CoffeeMachineMenu {
 		
 		Set<Inventory> stockAvailable = inventory.getStockDetails();
 		
-		for(Menu menu : menuList ){
+			for(Menu menu : menuList ){
 			boolean status = true;
 			List<IngredientDetails> ingredientsList = ingredientDetails(menu.getDrinkNumber());	
 			 for (IngredientDetails ingredients : ingredientsList){

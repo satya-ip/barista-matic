@@ -45,25 +45,31 @@ public class CoffeeMainApp {
     
     Scanner scanner = new Scanner(System.in);
     String input = "";
-    try{
-    while(!input.equalsIgnoreCase("q")){
-    	 //System.out.print("Enter the drink number: ");
-	     int drinkNumber = scanner.nextInt();
-	     addMenu.orderDrink(addInventory,drinkNumber);
+    boolean cont = true;
+    while(cont){
+    input = scanner.next();
+    switch(input){
+    case "1": case "2": case "3": case "4": case "5": case "6":
+    	 int drinkNumber = Integer.parseInt(input);
+    	 addMenu.orderDrink(addInventory,drinkNumber);
 	     addInventory.displayInventory();
-	     addMenu.displayMenu();
-	     //System.out.print("Enter the option: ");
-	     input = scanner.next();
-	     if(input.equals("r")){
-	    	 addMenu.restock(addInventory);; 
-	    	 addInventory.displayInventory();
-		     addMenu.displayMenu();
-	     }
-	   }
-    } catch(InputMismatchException e){   
-        System.out.println("Your input is not a number");
-       }
-   }
+	     addMenu.displayMenu();	
+	     break;
+    case "r" :
+    	addMenu.restock(addInventory);; 
+   	    addInventory.displayInventory();
+	    addMenu.displayMenu();
+	    break;
+    case "q":
+    	cont = false;
+    	break ;
+    default:
+    	System.out.println("Invalid selection:" + input );
+    	cont = false;
+    	break ;
+    	} 
+      }
+    }
 }
 	
 
