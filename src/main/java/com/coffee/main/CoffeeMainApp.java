@@ -47,13 +47,18 @@ public class CoffeeMainApp {
     String input = "";
     try{
     while(!input.equalsIgnoreCase("q")){
-    	 System.out.print("Enter the drink number: ");
+    	 //System.out.print("Enter the drink number: ");
 	     int drinkNumber = scanner.nextInt();
 	     addMenu.orderDrink(addInventory,drinkNumber);
 	     addInventory.displayInventory();
 	     addMenu.displayMenu();
-	     System.out.print("Enter the option: ");
+	     //System.out.print("Enter the option: ");
 	     input = scanner.next();
+	     if(input.equals("r")){
+	    	 addMenu.restock(addInventory);; 
+	    	 addInventory.displayInventory();
+		     addMenu.displayMenu();
+	     }
 	   }
     } catch(InputMismatchException e){   
         System.out.println("Your input is not a number");

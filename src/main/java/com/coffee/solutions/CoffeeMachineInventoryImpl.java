@@ -1,7 +1,12 @@
 package com.coffee.solutions;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 
 import com.coffee.data.Inventory;
 
@@ -30,16 +35,17 @@ public class CoffeeMachineInventoryImpl implements CoffeeMachineInventory {
 	 }
  
 	public void  displayInventory() {
-		System.out.println("Inventory Details");
-		inventoryList.forEach(item->System.out.println("  " + item.getIngredientName() + "  "
+		List<Inventory> sortedList = new ArrayList<Inventory>(inventoryList);
+		sortedList.sort(
+			      (Inventory h1, Inventory h2) -> h1.getIngredientName().compareTo(h2.getIngredientName()));
+		sortedList.forEach(item->System.out.println("  " + item.getIngredientName() + "  "
 				+ item.getIngredientQuantity()));
 	 }
 	
-   	public void restock(String ingredientName) {
+   	public void restock() {
 		int ingredientQuantity = 10; 
 		inventoryList.stream()
-		.filter(s->s.getIngredientName().equals(ingredientName))
-		.findAny().ifPresent(s -> s.setIngredientQuantity( ingredientQuantity));
+		.forEach(s -> s.setIngredientQuantity(ingredientQuantity));
 	 }
 
 	public Boolean stockStatus(String ingredientName,Integer noOfUnitsRequired) {

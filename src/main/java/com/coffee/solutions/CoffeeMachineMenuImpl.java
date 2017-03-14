@@ -19,17 +19,20 @@ public class CoffeeMachineMenuImpl implements CoffeeMachineMenu {
 	}
 
 	public void displayMenu() {
+		List<Menu> sortedList = new ArrayList<Menu>(menuList);
+		sortedList.sort(
+			      (Menu h1, Menu h2) -> h1.getDrinkName().compareTo(h2.getDrinkName()));
 		System.out.println("Menu Details");
-		menuList.forEach(item->System.out.println("  " + item.getDrinkNumber() + "  "
-				+ item.getDrinkName() + "  " + item.getDrinkCost() +"  " + item.getInStock()));
+		sortedList.forEach(item->System.out.println("  " + item.getDrinkNumber() + "  "
+				+ item.getDrinkName() + "  " + "$" + item.getDrinkCost() +"  " + item.getInStock()));
 	}
 	
-	public void updateMenu(CoffeeMachineInventory inventory, Integer drinkNumber,List<IngredientDetails> details) {
+	public void updateMenu(CoffeeMachineInventory inventory) {
 		
 		Set<Inventory> stockAvailable = inventory.getStockDetails();
 		
 		for(Menu menu : menuList ){
-			boolean status = menu.getInStock();
+			boolean status = true;
 			List<IngredientDetails> ingredientsList = ingredientDetails(menu.getDrinkNumber());	
 			 for (IngredientDetails ingredients : ingredientsList){
 				 String ingredientName = ingredients.getIngredientName();
@@ -38,7 +41,6 @@ public class CoffeeMachineMenuImpl implements CoffeeMachineMenu {
 			}
 			menu.setInStock(status);
 		}
-		
 	}
 
 	public void orderDrink(CoffeeMachineInventory inventory,Integer drinkNumber) {
@@ -57,7 +59,7 @@ public class CoffeeMachineMenuImpl implements CoffeeMachineMenu {
 		 } else {
 			 System.out.println("Out Of Stock:" + selectedDrink.getDrinkName() );
 		 }
-		 	updateMenu(inventory,selectedDrink.getDrinkNumber(),ingredients);
+		 	updateMenu(inventory);
 		}
 	
 
@@ -96,6 +98,13 @@ public class CoffeeMachineMenuImpl implements CoffeeMachineMenu {
 			break;
 		 }
 		return detailsList;
+	}
+
+	@Override
+	public void restock(CoffeeMachineInventory inventory) {
+		inventory.restock();
+		updateMenu(inventory);
+		displayMenu();
 	}
 }
 
